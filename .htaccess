@@ -1,0 +1,8 @@
+ErrorDocument 404 /Tripexpenses/pages/404.php
+ErrorDocument 403 /Tripexpenses/pages/403.php
+ErrorDocument 500 /Tripexpenses/pages/500.php
+
+<Files "secret.php">
+    Order allow,deny
+    Deny from all
+</Files>

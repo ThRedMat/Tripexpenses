@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+      <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1.0">
+            <title>À propos de nous</title>
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+            <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        header a {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background-color: white;
+            color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        header a:hover {
+            background-color: #f4f4f4;
+        }
+        section {
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 800px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+        }
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .intro-text {
+            flex: 1;
+        }
+        @media (min-width: 600px) {
+            .intro-content {
+                flex-direction: row;
+                text-align: left;
+            }
+            .avatar {
+                margin-right: 20px;
+                margin-bottom: 0;
+            }
+            header a {
+                top: 20px;
+                transform: none;
+            }
+        }
+        /* Bouton pour scroller automatiquement vers le top */
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 24px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        #myBtn:hover {
+            background-color: #555;
+        }
+    </style>
+      </head>
+      <body>
+            <button onclick="topFunction()" id="myBtn" title="Go to top">
+                  <i class="fas fa-chevron-up"></i>
+            </button>
+            <header>
+                  <h1>À propos de nous</h1>
+                  <a href="../../pages/home.php">Retour à l'accueil</a>
+            </header>
+
+            <section id="introduction">
+                  <h2>Introduction</h2>
+                  <div class="intro-content">
+                        <img src="../../images/redmat.png"
+                              alt="Avatar de Mathieu DARRIBAU" class="avatar">
+                        <div class="intro-text">
+                              <p>Bienvenue sur mon application ! Je suis Mathieu
+                                    DARRIBAU, le développeur derrière ce
+                                    projet.</p>
+                              <p>Cette application a été conçue pour répertorier
+                                    les diverses dépenses engagées lors d'un
+                                    voyage.</p>
+                              <p>Mon objectif est de fournir une solution simple
+                                    et efficace pour gérer et suivre ces
+                                    dépenses.</p>
+                        </div>
+                  </div>
+            </section>
+
+            <section id="project-history">
+                  <h2>Historique du projet</h2>
+                  <p>Le projet a débuté en 2024, lorsque j'ai eu l'idée de
+                        suivre mes dépenses durant mes déplacements. Après
+                        plusieurs mois de développement et de tests,
+                        l'application a été lancée avec succès.</p>
+                  <p>Le développement a été une aventure enrichissante, ponctuée
+                        de défis tels que l'optimisation des performances pour
+                        garantir une expérience utilisateur fluide, la mise en
+                        place de mesures de sécurité robustes pour protéger les
+                        données sensibles, et la conception d'une interface
+                        utilisateur intuitive et facile à utiliser. J'ai
+                        travaillé avec persévérance pour surmonter ces obstacles
+                        et offrir une application répondant pleinement à vos
+                        besoins.</p>
+            </section>
+
+            <section id="my-role">
+                  <h2>Mon rôle</h2>
+                  <p>En tant que développeur principal, j'ai été responsable de
+                        la conception et du développement de l'application.</p>
+                  <p>J'ai utilisé des technologies telles que HTML/CSS, PHP et
+                        JavaScript pour créer une application robuste et
+                        conviviale.</p>
+            </section>
+
+            <section id="vision">
+                  <h2>Vision et objectifs</h2>
+                  <p>Je suis passionné par le développement web et je m'engage à
+                        continuer d'améliorer l'application pour mieux répondre
+                        à vos besoins.</p>
+                  <p>À l'avenir, je prévois d'ajouter de nouvelles
+                        fonctionnalités pour enrichir l'expérience utilisateur
+                        et optimiser la gestion des dépenses.</p>
+            </section>
+
+            <section id="thanks">
+                  <h2>Remerciements</h2>
+                  <p>Je souhaite exprimer ma gratitude à toutes les personnes
+                        qui m'ont soutenu et aidé durant le développement de
+                        cette application. Votre aide et vos conseils ont été
+                        essentiels pour mener à bien ce projet.</p>
+                  <p>Je suis également reconnaissant envers les futurs
+                        utilisateurs pour leur intérêt et leur confiance. Vos
+                        retours seront précieux pour continuer à améliorer
+                        l'application.</p>
+            </section>
+
+            <section id="contact">
+                  <h2>Contact</h2>
+                  <p>Pour toute question ou suggestion, n'hésitez pas à me
+                        contacter :</p>
+                  <ul>
+                        <li>Email : <a
+                                    href="mailto:mon.email@example.com">mon.email@example.com</a></li>
+                        <li>LinkedIn : <a
+                                    href="https://www.linkedin.com/in/votreprofil">Mon
+                                    Profil LinkedIn</a></li>
+                  </ul>
+            </section>
+
+            <script>
+        // variable pour créer un bouton de scroll
+        let mybutton = document.getElementById("myBtn");
+
+        // Quand on scroll vers le bas de 20px à partir du haut de la page, le bouton apparait
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (
+                document.body.scrollTop > 20 ||
+                document.documentElement.scrollTop > 20
+            ) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // Quand on clique sur le bouton, on scroll automatiquement en haut de la page
+        function topFunction() {
+            scrollToTopWithAnimation();
+        }
+
+        function scrollToTopWithAnimation() {
+            // Vitesse de défilement (pour changer la vitesse de défilement, on doit changer le chiffre du dénominateur, plus le chiffre est élevé, plus le défilement sera plus lent)
+            const scrollStep = -window.scrollY / (1000 / 15);
+            const scrollInterval = setInterval(function () {
+                if (window.scrollY !== 0) {
+                    window.scrollBy(0, scrollStep);
+                } else {
+                    clearInterval(scrollInterval);
+                }
+            }, 15); // Intervalle de temps entre chaque étape du défilement
+        }
+    </script>
+      </body>
+</html>

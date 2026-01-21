@@ -1,0 +1,447 @@
+<?php
+require_once '../admin_auth.php';
+require_role(['super_admin', 'moderateur']); // super_admin et moderateur peuvent gérer les utilisateurs
+require_once '../include/config.php';
+require_once '../logs/log_functions.php';
+
+// Ajouter un nouvel utilisateur
+if (isset($_POST['create_user'])) {
+    $username = trim($_POST['username']);
+    $mail = trim($_POST['mail']);
+    $password = $_POST['password'];
+
+    if ($username && $mail && $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare("INSERT INTO users (username, mail, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $mail, $hashedPassword);
+        $stmt->execute();
+        $stmt->close();
+
+        log_admin_action($conn, $_SESSION['admin_id'], "Créé nouvel utilisateur '$username'");
+        $message = "Utilisateur '$username' créé avec succès !";
+    } else {
+        $error = "Tous les champs sont obligatoires.";
+    }
+}
+
+// Supprimer un utilisateur
+if (isset($_POST['delete_user'])) {
+    $user_id = (int)$_POST['user_id'];
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE id=?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    log_admin_action($conn, $_SESSION['admin_id'], "Supprimé l'utilisateur ID #$user_id");
+    $message = "Utilisateur supprimé.";
+}
+
+// Modifier un utilisateur
+if (isset($_POST['update_user'])) {
+    $user_id = (int)$_POST['user_id'];
+    $mail = trim($_POST['mail']);
+
+    $stmt = $conn->prepare("UPDATE users SET mail=? WHERE id=?");
+    $stmt->bind_param("si", $mail, $user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    log_admin_action($conn, $_SESSION['admin_id'], "Mis à jour l'utilisateur ID #$user_id");
+    $message = "Utilisateur mis à jour.";
+}
+
+// Récupérer tous les utilisateurs
+$result = $conn->query("SELECT id, username, lastname, pseudo, mail, created_at, updated_at FROM users ORDER BY id ASC");
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des utilisateurs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 32px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: linear-gradient(135deg, #81e6d9 0%, #38b2ac 100%);
+            color: white;
+        }
+
+        .alert.error {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="mail"] {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="mail"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"][name="create_user"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            grid-column: 1 / -1;
+        }
+
+        button[type="submit"][name="create_user"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: #2d3748;
+            font-weight: 700;
+            text-align: left;
+            padding: 16px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.03);
+        }
+
+        .action-form {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #81e6d9 0%, #38b2ac 100%);
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-update:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(56, 178, 172, 0.3);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(245, 87, 108, 0.3);
+        }
+
+        .inline-input {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+
+        .inline-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .table-wrapper {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>👥</span>
+                Gestion des utilisateurs
+            </h1>
+            <a href="../dashboard.php" class="back-btn">
+                <span>⬅</span>
+                Retour au dashboard
+            </a>
+        </div>
+
+        <?php if (isset($message)): ?>
+            <div class="alert success">
+                <span>✓</span>
+                <span><?= htmlspecialchars($message); ?></span>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($error)): ?>
+            <div class="alert error">
+                <span>⚠️</span>
+                <span><?= htmlspecialchars($error); ?></span>
+            </div>
+        <?php endif; ?>
+
+        <div class="card">
+            <h2>Créer un nouvel utilisateur</h2>
+            <form method="post" class="form-grid">
+                <div class="input-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+                </div>
+                <div class="input-group">
+                    <label for="mail">Adresse email</label>
+                    <input type="mail" id="mail" name="mail" placeholder="email@exemple.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" name="create_user">✓ Créer l'utilisateur</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Liste des utilisateurs</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Pseudo</th>
+                            <th>Email</th>
+                            <th>Date de création</th>
+                            <th>Date de modification</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><span class="badge">#<?= htmlspecialchars($row['id']); ?></span></td>
+                                <td><?= htmlspecialchars($row['username']); ?></td>
+                                <td><?= htmlspecialchars($row['lastname']); ?></td>
+                                <td><?= htmlspecialchars($row['pseudo']); ?></td>
+                                <td>
+                                    <form method="post" class="action-form">
+                                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['id']); ?>">
+                                        <input type="mail" name="mail" class="inline-input" value="<?= htmlspecialchars($row['mail']); ?>" required>
+                                        <button type="submit" name="update_user" class="btn-update">Modifier</button>
+                                    </form>
+                                </td>
+                                <td><?= date_format(date_create($row['created_at']), 'd/m/Y H:i:s'); ?></td>
+                                <td><?= date_format(date_create($row['updated_at']), 'd/m/Y H:i:s'); ?></td>
+                                <td>
+                                    <form method="post" class="action-form">
+                                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['id']); ?>">
+                                        <button type="submit" name="delete_user" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

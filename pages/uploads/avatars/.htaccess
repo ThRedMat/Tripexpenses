@@ -1,0 +1,17 @@
+# Désactiver l'exécution des scripts PHP
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|phps)$">
+    Deny from all
+</FilesMatch>
+
+# Interdire l'indexation du dossier (pas de liste des fichiers)
+Options -Indexes
+
+# Autoriser uniquement l'accès en lecture aux images
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Require all granted
+</FilesMatch>
+
+# Tout le reste est bloqué
+<Files *>
+    Require all denied
+</Files>

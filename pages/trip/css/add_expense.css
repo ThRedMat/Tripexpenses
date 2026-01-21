@@ -1,0 +1,104 @@
+body {
+  background-image: url("../images/ile.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Permet de positionner le bouton en bas */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 60px;
+  /* Ajoute un espace en bas pour le bouton Annuler */
+}
+
+h4 {
+  text-align: center;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+input[type="submit"] {
+  width: calc(100% - 20px);
+  background-color: #007bff;
+  color: white;
+  padding: 14px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 18px;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.btn-retour {
+  position: absolute;
+  bottom: 10px;
+  /* Ajuste la distance du bas */
+  left: 10px;
+  /* Ajuste la distance de la gauche */
+  background-color: #6c757d;
+  color: #fff;
+  padding: 14px;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  display: block;
+  margin-top: 20px;
+  /* Ajoute un espace au-dessus du bouton Annuler */
+}
+
+.btn-retour:hover {
+  background-color: #5a6268;
+}
+
+.description {
+  resize: initial;
+}

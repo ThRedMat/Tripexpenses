@@ -1,0 +1,14 @@
+.old/
+node_modules/
+uploads/avatars/
+bdd_old/
+images/drapeaux/
+pages/test/
+include/
+admin/pass.php
+admin/include/
+.DS_Store
+
+# Ignorer le contenu des logs mais garder le dossier
+admin/logs/*
+!admin/logs/.gitkeep

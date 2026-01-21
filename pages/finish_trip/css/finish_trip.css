@@ -1,0 +1,357 @@
+/* =========================================
+   RESET & BASE STYLES
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  padding-top: 70px;
+  padding-bottom: 80px;
+  font-size: 16px;
+}
+
+/* =========================================
+   SLIDESHOW BACKGROUND (Ton fond animé)
+   ========================================= */
+.slideshow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Le filtre violet par dessus les images */
+  background: linear-gradient(
+    135deg,
+    rgba(30, 39, 90, 0.85) 0%,
+    rgba(10, 10, 30, 0.9) 100%
+  );
+}
+
+/* Images du slideshow */
+.slide:nth-child(1) {
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80");
+}
+.slide:nth-child(2) {
+  background-image: url("https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=1600&q=80");
+}
+.slide:nth-child(3) {
+  background-image: url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80");
+}
+.slide:nth-child(4) {
+  background-image: url("https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80");
+}
+.slide:nth-child(5) {
+  background-image: url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=80");
+}
+
+/* =========================================
+   LAYOUT CONTAINER
+   ========================================= */
+.container {
+  width: 100%;
+  max-width: 1100px; /* Un peu plus large pour la grille */
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   HEADER SECTION
+   ========================================= */
+.page-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+  animation: fadeInDown 0.8s ease;
+  padding: 0 10px;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 10px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  font-weight: 800;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   TRIPS CONTAINER & FILTER
+   ========================================= */
+.trips-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-radius: 12px;
+  flex-wrap: wrap;
+  justify-content: center; /* Centré */
+}
+
+.filter-bar label {
+  font-weight: 600;
+  color: #444;
+}
+
+.filter-bar select {
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  background: white;
+}
+
+/* =========================================
+   NOUVEAU DESIGN DES CARTES (PHOTOS)
+   ========================================= */
+
+/* 1. La Grille */
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* 2. La Carte (Conteneur Image) */
+.trip-card.finished-card {
+  position: relative;
+  height: 280px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: none;
+  display: block; /* Écrase l'ancien display:grid s'il traîne */
+  padding: 0; /* Important : pas de padding pour que l'image touche les bords */
+}
+
+.trip-card.finished-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 3. L'Overlay (Filtre sombre dégradé) */
+.trip-overlay-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* 4. Haut de carte (Titre + Badge) */
+.card-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.trip-destination-large {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  line-height: 1.2;
+  max-width: 70%;
+}
+
+.badge-finished {
+  background: #2ecc71;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 5. Bas de carte (Infos) */
+.card-bottom-info {
+  color: white;
+}
+
+.trip-dates {
+  font-size: 0.9rem;
+  color: #eee;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 6. Ligne Stats (Prix & Etoiles) */
+.trip-stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15); /* Glassmorphism */
+  backdrop-filter: blur(5px);
+  padding: 8px 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.trip-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.trip-cost {
+  font-weight: bold;
+  color: #81ecec; /* Cyan clair */
+  font-size: 1.05rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 7. Bouton Revivre */
+.btn-revivre {
+  display: block;
+  background: white;
+  color: #333;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.btn-revivre:hover {
+  background: #f1f1f1;
+  color: #000;
+}
+
+/* =========================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+
+@media (max-width: 768px) {
+  .trips-container {
+    padding: 20px;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .trip-card.finished-card {
+    height: 300px; /* Un peu plus haut sur mobile pour être à l'aise */
+  }
+}
+
+/* Ajustements locaux si besoin */
+.filter-bar {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Pour s'assurer que le contenu passe par dessus le slideshow */
+.container {
+  position: relative;
+  z-index: 2;
+}

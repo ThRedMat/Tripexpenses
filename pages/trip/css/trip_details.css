@@ -1,0 +1,700 @@
+/* =========================================
+   1. RESET & BASE
+   ========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.9) 0%,
+      rgba(118, 75, 162, 0.9) 100%
+    ),
+    url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* =========================================
+   2. CONTENEUR PRINCIPAL
+   ========================================= */
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================================
+   3. EN-TÊTE (HEADER) & TITRES
+   ========================================= */
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.trip-info-header h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 32px);
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.trip-date {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* Badges de statut */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.5em; /* Relatif au H1 */
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+.status-badge.en-cours {
+  background: #28a745;
+  color: white;
+}
+.status-badge.à-venir {
+  background: #17a2b8;
+  color: white;
+}
+.status-badge.terminé {
+  background: #6c757d;
+  color: white;
+}
+
+/* =========================================
+   4. BOUTONS D'ACTION (HEADER)
+   ========================================= */
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Bouton Paramètres (Gris) */
+.btn-settings {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+.btn-settings:hover {
+  background-color: #cbd5e0;
+  transform: translateY(-2px);
+}
+
+/* Bouton Ajouter (Vert Premium) */
+.btn-add-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.btn-add-main:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.6);
+  filter: brightness(1.1);
+}
+.btn-add-main:active {
+  transform: translateY(-1px);
+}
+
+.plus-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  display: block;
+  margin-top: -2px;
+}
+
+/* =========================================
+   5. DASHBOARD & CARTES BUDGET
+   ========================================= */
+.budget-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.budget-card {
+  padding: 25px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e1e8ed;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.budget-card.main {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.budget-card h3 {
+  margin: 0;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 800;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+/* =========================================
+   6. TABLEAU DES DÉPENSES
+   ========================================= */
+.expenses-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 20px;
+}
+
+.expenses-table th {
+  padding: 10px 20px;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.expenses-table th:last-child {
+  text-align: right;
+}
+
+.expenses-table tbody tr {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+}
+.expenses-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.expenses-table td {
+  padding: 15px 20px;
+  background: white;
+}
+/* Arrondis des bords */
+.expenses-table td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.expenses-table td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: right;
+}
+
+/* Montant */
+.expenses-table td strong {
+  color: #667eea;
+  background: #f0f4ff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* Actions (Crayon / Poubelle) */
+.btn-icon-edit,
+.btn-icon-delete {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 5px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.btn-icon-edit:hover {
+  transform: scale(1.2);
+}
+.btn-icon-delete:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* =========================================
+   7. MODALES (Pop-ups)
+   ========================================= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover {
+  color: white;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 10px;
+}
+.btn-submit {
+  flex: 2;
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel {
+  flex: 1;
+  background: white;
+  border: 2px solid #e2e8f0;
+  color: #718096;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================================
+   8. NOTIFICATIONS
+   ========================================= */
+.notification {
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification.success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+.notification.danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  margin-left: 15px;
+}
+.close-btn:hover {
+  opacity: 1;
+}
+
+/* =========================================
+   9. RESPONSIVE MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  .container {
+    padding: 20px 15px;
+    margin: 10px auto;
+  }
+
+  .trip-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trip-info-header h1 {
+    justify-content: center;
+  }
+
+  /* BOUTONS MOBILE */
+  .btn-text {
+    display: none;
+  } /* Cache le texte */
+
+  .btn-add-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(72, 187, 120, 0.5);
+  }
+
+  .btn-settings {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+  }
+
+  /* TABLEAU EN CARTES (MOBILE VIEW) */
+  .expenses-table thead {
+    display: none;
+  }
+
+  .expenses-table,
+  .expenses-table tbody,
+  .expenses-table tr,
+  .expenses-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expenses-table tr {
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 5px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Barre latérale décorative */
+  .expenses-table tr::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 4px;
+    background: #667eea;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .expenses-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    padding: 8px 15px 8px 20px;
+    font-size: 0.95rem;
+    border-radius: 0 !important; /* Reset border radius table */
+  }
+
+  /* Montant en gras en bas */
+  .expenses-table td:nth-child(4) {
+    /* La colonne montant */
+    border-top: 1px dashed #eee;
+    padding-top: 12px;
+    margin-top: 5px;
+  }
+  .expenses-table td:nth-child(4) strong {
+    font-size: 1.1rem;
+    background: none;
+    padding: 0;
+    color: #667eea;
+  }
+}
+
+/* =========================================
+   INFO BOXES (Coûts Fixes & Réservations)
+   ========================================= */
+.info-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.info-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #ccc; /* Couleur par défaut */
+  transition: transform 0.2s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-3px);
+}
+
+.info-box h4 {
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.info-box .price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #333;
+  margin: 0;
+}
+
+.info-box small {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* Responsive : Empiler sur mobile */
+@media (max-width: 600px) {
+  .info-boxes {
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+   NOTIFICATIONS (TOAST)
+   ========================================= */
+.toast-notification {
+  visibility: hidden; /* Caché par défaut */
+  min-width: 250px; /* Largeur minimum */
+  background-color: #fff; /* Fond blanc */
+  color: #333; /* Texte gris foncé */
+  text-align: center;
+  border-radius: 50px; /* Bords très arrondis (pill shape) */
+  padding: 15px 25px;
+  position: fixed; /* Reste fixe même si on scrolle */
+  z-index: 9999; /* Au-dessus de tout le reste */
+  left: 50%;
+  top: 30px; /* Position de départ */
+  transform: translateX(-50%); /* Centrage horizontal parfait */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Ombre portée */
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transition: all 0.5s ease-in-out; /* Animation fluide */
+}
+
+/* L'état "Affiché" (ajouté par le Javascript) */
+.toast-notification.show {
+  visibility: visible;
+  opacity: 1;
+  top: 50px; /* Petit effet de descente quand ça apparait */
+}
+
+/* Couleurs spécifiques selon le type de message */
+.toast-notification.success {
+  border-left: 6px solid #2ecc71; /* Bordure verte à gauche */
+}
+
+.toast-notification.danger {
+  border-left: 6px solid #e74c3c; /* Bordure rouge à gauche */
+}
+
+/* Style de l'icône dans la notif */
+.toast-icon {
+  font-size: 1.2em;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  transition: transform 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-icon:hover {
+  background-color: #f1f5f9;
+  transform: scale(1.1);
+}
+.btn-icon.delete:hover {
+  background-color: #fee2e2;
+}
+
+.btn-back-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: white;
+  color: #667eea;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.btn-back-circle:hover {
+  transform: translateX(-3px);
+  background: #667eea;
+  color: white;
+}

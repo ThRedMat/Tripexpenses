@@ -1,0 +1,774 @@
+/* =========================================
+   1. RESET & BASE STYLES
+   ========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.85) 0%,
+      rgba(118, 75, 162, 0.85) 100%
+    ),
+    url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 20px 10px;
+  min-height: 100vh;
+  color: #333;
+  padding-bottom: 80px; /* Space for scroll-top button */
+}
+
+/* =========================================
+   2. MAIN CONTAINER
+   ========================================= */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+/* =========================================
+   3. HEADER & NAVIGATION
+   ========================================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header h1,
+.header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.header h1 {
+  font-size: 24px;
+  text-align: left;
+}
+.header h2 {
+  font-size: 20px;
+  color: #667eea;
+}
+
+/* Round Back Button (Modern Style) */
+.btn-back-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: white;
+  color: #667eea;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #f1f5f9;
+  flex-shrink: 0;
+}
+
+.btn-back-circle:hover {
+  transform: translateX(-3px);
+  background: #667eea;
+  color: white;
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.25);
+}
+
+/* Old Back Button (kept for compatibility if needed) */
+.back-home {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dateVoyage {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+  display: block;
+}
+
+/* =========================================
+   4. BUDGET CARDS
+   ========================================= */
+.budget-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.budget-card {
+  padding: 25px;
+  border-radius: 15px;
+  background: white;
+  border: 1px solid #e1e8ed;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.budget-card.main {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.budget-card.warning {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+.budget-card.danger {
+  background: #f8d7da;
+  border-color: #dc3545;
+}
+
+.budget-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+.budget-card .amount {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.budget-card .detail {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+.progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* =========================================
+   5. INFO BOXES (Fixed Costs)
+   ========================================= */
+.info-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.info-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 220px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #667eea;
+}
+
+.info-box h4 {
+  margin: 0 0 8px 0;
+  color: #667eea;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.info-box .price {
+  font-weight: 800;
+  color: #333;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+/* =========================================
+   6. TABLE & LISTS (Modern Dashboard Style)
+   ========================================= */
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0 20px 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Desktop Table Style */
+.expenses-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px; /* Spacing between rows */
+  background: transparent;
+}
+
+.expenses-table thead th {
+  text-align: left;
+  padding: 0 20px 10px 20px;
+  color: #94a3b8;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.expenses-table thead th:last-child {
+  text-align: right;
+}
+
+.expenses-table tbody tr {
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border-radius: 12px;
+}
+
+.expenses-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.expenses-table td {
+  padding: 20px;
+  border: none;
+  vertical-align: middle;
+}
+
+.expenses-table td:first-child {
+  border-radius: 12px 0 0 12px;
+  font-weight: 500;
+  color: #64748b;
+}
+.expenses-table td:last-child {
+  border-radius: 0 12px 12px 0;
+  text-align: right;
+}
+
+/* Amount Style */
+.expenses-table td strong {
+  font-weight: 800;
+  color: #667eea;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.empty-message {
+  text-align: center;
+  color: #999;
+  padding: 40px;
+  font-style: italic;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.badge.a-venir {
+  background: #17a2b8;
+  color: white;
+}
+.badge.en-cours {
+  background: #28a745;
+  color: white;
+}
+.badge.termine {
+  background: #ffc107;
+  color: #333;
+}
+.badge.archive {
+  background: #6c757d;
+  color: white;
+}
+
+/* Badge "Hors Budget" in table */
+.badge-fixed {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Action Buttons (Edit/Delete) */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-icon:hover {
+  background-color: #f1f5f9;
+  transform: scale(1.1);
+}
+.btn-icon.delete:hover {
+  background-color: #fee2e2;
+}
+
+/* =========================================
+   7. FEEDBACK & STARS
+   ========================================= */
+.feedback-section {
+  margin-top: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.feedback-section textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #e1e8ed;
+  font-size: 15px;
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+.star-rating {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 32px;
+}
+.star-rating input {
+  display: none;
+}
+.star-rating label {
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s;
+}
+.star-rating input:checked ~ label {
+  color: #ccc;
+}
+.star-rating label:has(~ input:checked),
+.star-rating input:checked + label {
+  color: #f1c40f;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #f1c40f;
+}
+
+/* =========================================
+   8. NOTIFICATIONS & MODAL
+   ========================================= */
+/* Toast Notification */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #27ae60;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 0;
+}
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+  padding: 20px 10px;
+}
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  border-radius: 20px;
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: slideDown 0.3s ease;
+}
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 25px;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.close {
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+.modal-body {
+  padding: 30px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #f8f9fa;
+}
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+.btn-submit {
+  flex: 1;
+  background: #667eea;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel {
+  flex: 1;
+  background: white;
+  color: #667eea;
+  border: 2px solid #e1e8ed;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Scroll Top Button */
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #ff5757;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================
+   9. MOBILE RESPONSIVE (Cards Style)
+   ========================================= */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
+    margin: 10px auto;
+  }
+
+  /* Header adjustments */
+  .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+  }
+  .header h1 {
+    text-align: center;
+    font-size: 22px;
+  }
+
+  /* Buttons full width */
+  .btn,
+  .btn-excel {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .form-actions {
+    flex-direction: column;
+  }
+
+  /* TABLE TRANSFORMATION -> CARDS */
+  .expenses-table {
+    display: block;
+  }
+  .expenses-table thead {
+    display: none;
+  }
+  .expenses-table tbody,
+  .expenses-table tr,
+  .expenses-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expenses-table tr {
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    position: relative;
+    padding: 10px 0;
+  }
+
+  /* Decorative bar on left */
+  .expenses-table tr::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 4px;
+    background-color: #667eea;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .expenses-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 8px 25px;
+    border: none;
+    text-align: right;
+  }
+
+  /* Labels via CSS */
+  .expenses-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #94a3b8;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-right: auto;
+  }
+
+  /* Description specifics */
+  .expenses-table td:nth-of-type(3) {
+    display: block;
+    text-align: left;
+  }
+  .expenses-table td:nth-of-type(3)::before {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Amount line */
+  .expenses-table td:nth-last-child(2) {
+    /* Assuming Amount is 2nd to last if Actions exist */
+    border-top: 1px dashed #eee;
+    margin-top: 5px;
+    padding-top: 12px;
+  }
+  .expenses-table td:last-child {
+    /* Actions */
+    justify-content: flex-end;
+    padding-top: 0;
+  }
+
+  .expenses-table td strong {
+    background: none;
+    padding: 0;
+    font-size: 18px;
+  }
+}
+
+/* AJOUTS SPÉCIFIQUES POUR L'HARMONISATION */
+/* Badges */
+.badge-fixed {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Boutons Actions */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  text-decoration: none;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.btn-icon:hover {
+  transform: scale(1.1);
+  background-color: #f1f5f9;
+  border-radius: 5px;
+}
+.btn-icon.delete:hover {
+  background-color: #fee2e2;
+}
+
+/* Notification Toast */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #27ae60;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.5s;
+  opacity: 0;
+}
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Bouton Retour Rond */
+.btn-back-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: white;
+  color: #667eea;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+.btn-back-circle:hover {
+  transform: translateX(-3px);
+  background: #667eea;
+  color: white;
+}
+
+/* Responsive Table adjustments */
+@media (max-width: 768px) {
+  .expenses-table thead {
+    display: none;
+  }
+  .expenses-table tr {
+    display: block;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border-left: 4px solid #667eea;
+    padding: 10px 0;
+  }
+  .expenses-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 15px;
+    border: none;
+    align-items: center;
+  }
+  .expenses-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #94a3b8;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .expenses-table td:last-child {
+    justify-content: flex-end;
+    border-top: 1px dashed #eee;
+    margin-top: 5px;
+    padding-top: 10px;
+  }
+  .expenses-table td:nth-of-type(3) {
+    display: block;
+    text-align: left;
+  } /* Description */
+}

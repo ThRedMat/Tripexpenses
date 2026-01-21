@@ -1,0 +1,400 @@
+/* =========================================
+   RESET & BASE
+   ========================================= */
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+
+body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0f172a;
+      color: #fff;
+}
+
+/* =========================================
+   NAVBAR CONTAINER (CORRIGÉ)
+   ========================================= */
+
+/* 1. IMPORTANT : On cache le menu mobile sur PC par défaut */
+.mobile-menu {
+      display: none !important;
+}
+
+.navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      /* On garde la transparence par défaut */
+      background: transparent; 
+      padding: 1rem 2rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar.scrolled {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.8rem 2rem;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+      /* 2. CORRECTION LARGEUR : On prend tout l'écran */
+      width: 100%;      
+      max-width: 100%;  /* On annule la limite de 1400px */
+      margin: 0;        /* On annule le centrage auto */
+      padding: 0 20px;  /* Petite marge de sécurité sur les bords */
+
+      display: grid;
+      /* On garde la grille car c'est le meilleur moyen de centrer le menu */
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+}
+
+            /* =========================================
+               1. GAUCHE : LOGO
+               ========================================= */
+            .logo {
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  text-decoration: none;
+                  font-weight: 800;
+                  font-size: 1.3rem;
+                  color: white;
+                  justify-self: start; /* Force l'alignement à gauche */
+                  letter-spacing: -0.5px;
+            }
+
+            .logo img {
+                  width: 38px;
+                  height: 38px;
+                  border-radius: 10px;
+                  object-fit: cover;
+                  box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+            }
+
+            /* =========================================
+               2. CENTRE : NAVIGATION
+               ========================================= */
+            .nav-center {
+                  justify-self: center; /* Force l'alignement au centre */
+            }
+
+            .nav-links {
+                  display: flex;
+                  list-style: none;
+                  background: rgba(255, 255, 255, 0.05); /* Fond "capsule" subtil */
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                  padding: 5px;
+                  border-radius: 50px;
+                  backdrop-filter: blur(5px);
+                  gap: 5px;
+            }
+
+            .nav-links li {
+                  position: relative;
+            }
+
+            .nav-links a {
+                  text-decoration: none;
+                  color: rgba(255, 255, 255, 0.75);
+                  font-weight: 500;
+                  font-size: 0.95rem;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 30px;
+                  transition: all 0.3s ease;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+            }
+
+            /* Effets au survol */
+            .nav-links a:hover {
+                  color: white;
+                  background: rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a.active {
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  color: white;
+                  box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+                  font-weight: 600;
+            }
+
+            /* =========================================
+               3. DROITE : PROFIL & ACTIONS
+               ========================================= */
+            .nav-right {
+                  justify-self: end; /* Force l'alignement à droite */
+                  display: flex;
+                  align-items: center;
+                  position: relative;
+            }
+
+            /* Bouton Profil */
+            .profile-btn {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  background: transparent;
+                  color: white;
+                  padding: 0.5rem 1rem;
+                  border-radius: 30px;
+                  text-decoration: none;
+                  font-weight: 600;
+                  font-size: 0.95rem;
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  transition: all 0.3s ease;
+            }
+
+            .profile-btn:hover {
+                  background: rgba(255, 255, 255, 0.1);
+                  border-color: rgba(255, 255, 255, 0.4);
+            }
+
+            /* Sous-menu Dropdown */
+            .submenu {
+                  position: absolute;
+                  top: 150%;
+                  right: 0;
+                  width: 240px;
+                  background: rgba(15, 23, 42, 0.95);
+                  backdrop-filter: blur(20px);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 16px;
+                  padding: 8px;
+                  list-style: none;
+                  opacity: 0;
+                  visibility: hidden;
+                  transform: translateY(10px);
+                  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+                  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            /* Affichage du dropdown au survol de .nav-right */
+            .nav-right:hover .submenu {
+                  opacity: 1;
+                  visibility: visible;
+                  transform: translateY(0);
+                  top: 120%; /* Légère animation de descente */
+            }
+
+            .submenu li a {
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  padding: 12px 16px;
+                  color: #cbd5e1;
+                  text-decoration: none;
+                  border-radius: 10px;
+                  transition: all 0.2s;
+                  font-size: 0.9rem;
+            }
+
+            .submenu li a:hover {
+                  background: rgba(255, 255, 255, 0.08);
+                  color: white;
+                  transform: translateX(5px);
+            }
+
+            .submenu li a.logout {
+                  color: #ff8080;
+                  margin-top: 5px;
+                  border-top: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 0 0 10px 10px;
+            }
+
+            .submenu li a.logout:hover {
+                  background: rgba(239, 68, 68, 0.15);
+                  color: #ff4d4d;
+            }
+
+            /* =========================================
+               RESPONSIVE / MOBILE
+               ========================================= */
+            .mobile-toggle {
+                  display: none; /* Caché sur PC */
+                  background: none;
+                  border: none;
+                  color: white;
+                  font-size: 1.5rem;
+                  cursor: pointer;
+            }
+
+            @media (max-width: 1024px) {
+                  .nav-container {
+                        display: flex; /* On repasse en Flex simple sur mobile */
+                        justify-content: space-between;
+                  }
+
+                  /* On cache les éléments PC */
+                  .nav-center,
+                  .nav-right {
+                        display: none; 
+                  }
+                  
+                  /* On affiche le burger */
+                  .mobile-toggle {
+                        display: block;
+                  }
+
+                  /* Menu Mobile Fullscreen */
+                  /* DANS LE BLOC @media (max-width: 1024px) */
+
+/* État par défaut (Fermé) */
+.mobile-menu {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 2000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+    /* On le prépare à l'animation */
+    transform: translateX(100%); /* Poussé vers la droite (hors écran) */
+    opacity: 0; /* Invisible */
+    transition: all 0.4s ease-in-out; /* Animation fluide */
+}
+
+/* État Actif (Ouvert) - C'EST ICI QUE CA SE JOUE */
+.mobile-menu.active {
+    transform: translateX(0) !important; /* On le ramène au centre de force */
+    opacity: 1 !important; /* On le rend totalement visible */
+}
+
+                  /* Style des liens mobile */
+                  .mobile-menu a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        padding: 10px 20px;
+                        border-radius: 10px;
+                  }
+
+                  .mobile-menu a.active {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  }
+
+                  .close-menu {
+                        position: absolute;
+                        top: 20px;
+                        right: 20px;
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 2rem;
+                        cursor: pointer;
+                  }
+            }
+
+            /* =========================================
+   FIX RESPONSIVE (A ajouter à la fin du CSS)
+   ========================================= */
+
+@media (max-width: 1024px) {
+    
+    /* Ajustement Hero (Comme vu avant) */
+    .hero-container {
+        padding-top: 160px !important;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* --- LE MENU MOBILE (CONTENEUR) --- */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        /* Fond sombre mais translucide avec flou */
+        background: rgba(15, 23, 42, 0.95); 
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px); /* Pour Safari */
+        z-index: 2000;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+
+        /* L'ANIMATION DU CONTENEUR */
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.95); /* Part d'un peu plus petit */
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Courbe fluide */
+    }
+
+    /* QUAND LE MENU EST OUVERT */
+    .mobile-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1); /* Revient à taille normale */
+    }
+
+    /* --- LES LIENS DU MENU (EFFET CASCADE) --- */
+    .mobile-menu a {
+        opacity: 0;
+        transform: translateY(20px); /* Ils arrivent du bas */
+        transition: all 0.4s ease-out;
+        color: white;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+    /* QUAND C'EST ACTIF : On fait apparaître les liens */
+    .mobile-menu.active a {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* LES DÉLAIS (C'est ça le secret de la fluidité) */
+    /* Chaque lien arrive un peu après l'autre */
+    .mobile-menu.active a:nth-of-type(1) { transition-delay: 0.1s; }
+    .mobile-menu.active a:nth-of-type(2) { transition-delay: 0.15s; }
+    .mobile-menu.active a:nth-of-type(3) { transition-delay: 0.2s; }
+    .mobile-menu.active a:nth-of-type(4) { transition-delay: 0.25s; }
+    .mobile-menu.active a:nth-of-type(5) { transition-delay: 0.3s; }
+    .mobile-menu.active a:nth-of-type(6) { transition-delay: 0.35s; }
+    .mobile-menu.active a:nth-of-type(7) { transition-delay: 0.4s; }
+
+    /* --- LE BOUTON FERMER (ANIMÉ) --- */
+    .close-menu {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2.5rem;
+        cursor: pointer;
+        z-index: 2001;
+        opacity: 0;
+        transform: rotate(-90deg); /* Tourne en arrivant */
+        transition: all 0.5s ease 0.3s; /* Arrive en dernier */
+    }
+
+    .mobile-menu.active .close-menu {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+
+    /* Hover sur le bouton fermer */
+    .close-menu:hover {
+        color: #f87171;
+        transform: scale(1.1) rotate(90deg);
+    }
+}

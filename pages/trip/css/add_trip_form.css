@@ -1,0 +1,132 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.btn-retour {
+  display: inline-block;
+  background-color: #6c757d;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+
+.btn-retour:hover {
+  background-color: #5a6268;
+}
+
+.currency-container {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+.currency-container select {
+  width: 100%;
+  padding: 15px;
+  /* Augmenter le padding pour faciliter l'interaction tactile */
+  margin: 5px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><polygon fill="%23333" points="0,0 20,0 10,10"/></svg>')
+    no-repeat right 10px center;
+  background-color: #fff;
+  font-size: 16px;
+  /* Augmenter la taille de la police pour une meilleure lisibilité */
+}
+
+/* Ajouter un peu de padding à droite pour éviter que le texte des options ne soit masqué par l'icône de la flèche */
+.currency-container select {
+  padding-right: 40px;
+}
+
+.currency-container::before {
+  content: attr(data-icon);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  input[type="submit"],
+  .btn-retour {
+    font-size: 16px;
+    padding: 12px;
+  }
+}

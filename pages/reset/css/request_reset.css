@@ -1,0 +1,247 @@
+/* --- RESET & BASES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* Dégradé similaire à ton image actuelle */
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center; /* Centre verticalement */
+  justify-content: center; /* Centre horizontalement */
+  padding: 20px;
+}
+
+.reset-container {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+
+/* --- LE FORMULAIRE --- */
+.reset-form {
+  width: 100%;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.reset-form h2 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 1.6rem;
+}
+
+.reset-form p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* --- INPUTS --- */
+.input-group {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.reset-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+  font-size: 14px;
+}
+
+.reset-form input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.reset-form input[type="email"]:focus {
+  border-color: #4f46e5;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* --- BOUTONS --- */
+.button-group {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  padding: 14px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: #4f46e5;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+/* --- ALERTES --- */
+.alert-wrapper {
+  width: 100%;
+}
+
+.alert {
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.alert.success {
+  background-color: #d1fae5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
+
+.alert.error {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* --- RESPONSIVE --- */
+
+/* Pour les tablettes et téléphones classiques */
+@media (max-width: 480px) {
+  .reset-form {
+    padding: 2rem 1.5rem;
+  }
+
+  /* Sur petit écran, on peut choisir d'empiler les boutons 
+     si le texte "Envoyer le lien" est trop long */
+  .button-group {
+    flex-direction: column-reverse; 
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+  }
+}
+
+/* Pour les très petits écrans (iPhone SE, etc.) */
+@media (max-width: 350px) {
+  .reset-form h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- STYLES POUR LA POPUP (MODAL) --- */
+
+.modal {
+  display: none; /* Caché par défaut */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond sombre transparent */
+  backdrop-filter: blur(5px); /* Floute l'arrière-plan */
+  display: none; 
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.modal-content h3 {
+  color: #d32f2f; /* Rouge pour l'erreur */
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 24px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #333;
+}
