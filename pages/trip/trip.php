@@ -189,8 +189,8 @@ function calculate_days_before_start($start_date)
                     $source = !empty($trip['bg_image']) ? $trip['bg_image'] : ($trip['auto_bg'] ?? '');
 
                     if (!empty($source)) {
-                        // Si c'est un lien http ou un fichier local
-                        $bg_image = $source;
+                        // trim() enlève les espaces et sauts de ligne invisibles au début et à la fin
+                        $bg_image = trim($source);
                     }
 
                     // Affichage de la Card avec la bonne image
