@@ -1,15 +1,29 @@
--- 1. Création de la table propre
-CREATE TABLE IF NOT EXISTS destinations (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    city VARCHAR(100) NOT NULL,
-    country VARCHAR(100) NOT NULL,
-    population INT DEFAULT NULL,
-    search_term VARCHAR(255),        -- Ex: "Tokyo, Japon" (Ce qui s'affichera)
-    image_url VARCHAR(500) DEFAULT NULL, -- Pour tes futures bannières
-    UNIQUE KEY unique_place (city, country)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : localhost
+-- Généré le : ven. 23 jan. 2026 à 16:51
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
 
--- 2. Insertion de données PARFAITES (Top 20 destinations)
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `tripexpenses`
+--
+
+--
+-- Déchargement des données de la table `destinations`
+--
 
 INSERT INTO `destinations` (`city`, `country`, `population`, `search_term`, `image_url`) VALUES
 ('les Escaldes', 'AD', 15853, 'les Escaldes, AD', '/TripExpenses/images/villes/les_escaldes.webp'),
